@@ -14,16 +14,14 @@ DROP TABLE Technician CASCADE;
    DROP TABLE Waitlist CASCADE; 
    DROP TABLE Confirmed CASCADE; 
    DROP TABLE Reserved CASCADE; */
+   
+CREATE TABLE Captain (
+	ID INTEGER, 
+	name CHAR(30),
+	PRIMARY KEY(ID)
+); 
 
-CREATE TABLE Schedule ( 
-	day CHAR(10),
-	depart_time CHAR(10),
-	arrive_time CHAR(10),
-	c_num INTEGER,
-	PRIMARY KEY (c_num),
-	FOREIGN KEY (c_num) REFERENCES Cruise
-);
-	
+
 CREATE TABLE Cruise (
 	c_num INTEGER,
 	cost FLOAT, 
@@ -40,11 +38,17 @@ CREATE TABLE Cruise (
 	/*might need connection to the aggregated entity here*/
 
 );
-CREATE TABLE Captain (
-	ID INTEGER, 
-	name CHAR(30),
-	PRIMARY KEY(ID)
-); 
+
+CREATE TABLE Schedule ( 
+	day CHAR(10),
+	depart_time CHAR(10),
+	arrive_time CHAR(10),
+	c_num INTEGER,
+	PRIMARY KEY (c_num),
+	FOREIGN KEY (c_num) REFERENCES Cruise
+);
+	
+
 
 CREATE TABLE Ship (
 	model CHAR(30),
@@ -55,6 +59,12 @@ CREATE TABLE Ship (
 	PRIMARY KEY(shipID)
 );
 
+CREATE TABLE Technician (
+	techID INTEGER,
+	PRIMARY KEY(techID)
+);
+
+
 CREATE TABLE repairs (
 	r_date CHAR(10),
 	code INTEGER,
@@ -64,11 +74,5 @@ CREATE TABLE repairs (
 	FOREIGN KEY(shipID) REFERENCES Ship,
 	FOREIGN KEY(techID) REFERENCES Technician
 );
-
-CREATE TABLE Technician (
-	techID INTEGER,
-	PRIMARY KEY(techID)
-);
-
 
 
