@@ -21,8 +21,7 @@ CREATE TABLE Schedule (
 	arrive_time CHAR(10),
 	c_num INTEGER,
 	PRIMARY KEY (c_num),
-	FOREIGN KEY (c_num) REFERENCES Cruise,
-	ON DELETE CASCADE
+	FOREIGN KEY (c_num) REFERENCES Cruise
 );
 	
 CREATE TABLE Cruise (
@@ -39,14 +38,12 @@ CREATE TABLE Cruise (
 	PRIMARY KEY (c_num),
 	FOREIGN KEY (ID) REFERENCES Captain 
 	/*might need connection to the aggregated entity here*/
-	ON DELETE CASCADE
-); 
 
+);
 CREATE TABLE Captain (
 	ID INTEGER, 
 	name CHAR(30),
-	PRIMARY KEY(ID),
-	ON DELETE CASCADE
+	PRIMARY KEY(ID)
 ); 
 
 CREATE TABLE Ship (
@@ -59,8 +56,10 @@ CREATE TABLE Ship (
 );
 
 CREATE TABLE repairs (
-	date CHAR(10),
+	r_date CHAR(10),
 	code INTEGER,
+	shipID INTEGER,
+	techID INTEGER,
 	PRIMARY KEY(shipID, techID),
 	FOREIGN KEY(shipID) REFERENCES Ship,
 	FOREIGN KEY(techID) REFERENCES Technician
