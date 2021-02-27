@@ -1,25 +1,48 @@
 DROP TABLE IF EXISTS Schedule CASCADE;
 DROP TABLE IF EXISTS Cruise CASCADE;
-/* DROP TABLE has CASCADE; */
-/* DROP TABLE works CASCADE; */
-/* DROP TABLE crew CASCADE; */
+DROP TABLE IF EXISTS has CASCADE; 
+DROP TABLE IF EXISTS works CASCADE; 
+DROP TABLE IF EXISTS crew CASCADE; 
 DROP TABLE IF EXISTS Captain CASCADE;
-/* DROP TABLE request CASCADE; */
+DROP TABLE IF EXISTS request CASCADE; 
 DROP TABLE IF EXISTS Ship CASCADE;
 DROP TABLE IF EXISTS repairs CASCADE;
 DROP TABLE IF EXISTS Technician CASCADE;
-
 DROP TABLE IF EXISTS Reservation CASCADE;
 DROP TABLE IF EXISTS Waitlist CASCADE;
 DROP TABLE IF EXISTS Confirmed CASCADE;
 DROP TABLE IF EXISTS Reserved CASCADE;
-/* DROP TABLE Customer CASCADE; 
-   DROP TABLE Reservation CASCADE; 
-   DROP TABLE ISA CASCADE;
-   DROP TABLE Waitlist CASCADE; 
-   DROP TABLE Confirmed CASCADE; 
-   DROP TABLE Reserved CASCADE; */
-   
+DROP TABLE IF EXISTS Customer CASCADE; 
+
+CREATE TABLE Crew (
+	crew_ID INTEGER NOT NULL,
+	crew_name CHAR(30),
+	PRIMARY KEY(crew_ID)
+);
+
+CREATE TABLE Works (
+	crew_ID INTEGER NOT NULL,
+	c_num INTEGER NOT NULL, 
+	PRIMARY KEY(crew_ID, c_num),
+	FOREIGN KEY(crew_ID) REFERENCES Crew,
+	FOREIGN KEY(c_num) REFERENCES Cruise
+);
+	
+
+CREATE TABLE Customer ( 
+	c_ID INTEGER NOT NULL, 
+	first_name CHAR(30),
+	last_name CHAR(30),
+	gender CHAR(10),
+	date_of_birth CHAR(11),
+	address CHAR(30),
+	contact_num INTEGER, 
+	zip_code INTEGER,
+	PRIMARY KEY(c_ID)
+);
+
+
+		       
 CREATE TABLE Captain (
 	ID INTEGER NOT NULL, 
 	name CHAR(30),
@@ -38,10 +61,13 @@ CREATE TABLE Cruise (
 	source CHAR(30),
 	destination CHAR(30),
 	ID INTEGER,
+	shipID INTEGER,
+	techID INTEGER,
 	PRIMARY KEY (c_num),
-	FOREIGN KEY (ID) REFERENCES Captain 
-	/*might need connection to the aggregated entity here*/
-
+	FOREIGN KEY (ID) REFERENCES Captain,
+	FOREIGN KEY(shipID) REFERENCES Ship,
+	FOREIGN KEY(techID) REFERENCES Technician
+	
 );
 
 CREATE TABLE Schedule ( 
@@ -85,6 +111,16 @@ CREATE TABLE Reservation (
 	PRIMARY KEY(rnum)
 );
 
+CREATE TABLE has (
+	c_num INTEGER NOT NULL,
+	c_ID INTEGER NOT NULL,
+	rnum NUMERIC NOT NULL, 
+	PRIMARY KEY(c_num, c_ID, rnum), 
+	FOREIGN KEY(c_num) REFERENCES Cruise,
+	FOREIGN KEY(c_ID) REFERENCES Customer,
+	FORIEGN KEY(rnum) REFERENCES Reservation
+);
+
 CREATE TABLE Waitlist (
 	rnum NUMERIC NOT NULL,
 	FOREIGN KEY(rnum) REFERENCES Reservation(rnum)
@@ -98,4 +134,15 @@ CREATE TABLE Confirmed (
 CREATE TABLE Reserved (
 	rnum NUMERIC NOT NULL,
 	FOREIGN KEY(rnum) REFERENCES Reservation(rnum)
+);
+
+CREATE TABLE request (
+	request_id INTEGER
+	ID INTEGER NOT NULL, 
+	shipID INTEGER NOT NULL, 
+	techID INTEGER NOT NULL, 
+	PRIMARY KEY(ID, shipID, techID),
+	FOREIGN KEY(ID) REFRENCES Captain,
+	FOREIGN KEY(shipID) REFERENCES Ship,
+	FOREIGN KEY(techID) REFERENCES Technician
 );
