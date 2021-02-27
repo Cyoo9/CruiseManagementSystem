@@ -135,11 +135,11 @@ CREATE TABLE Reserved (
 );
 
 CREATE TABLE request (
-	request_id INTEGER
+	request_id INTEGER NOT NULL,
 	ID INTEGER NOT NULL, 
 	shipID INTEGER NOT NULL, 
 	techID INTEGER NOT NULL, 
-	PRIMARY KEY(ID, shipID, techID),
+	PRIMARY KEY(request_id, ID, shipID, techID),
 	FOREIGN KEY(ID) REFRENCES Captain,
 	FOREIGN KEY(shipID) REFERENCES Ship,
 	FOREIGN KEY(techID) REFERENCES Technician
