@@ -1,5 +1,4 @@
 DROP TABLE Crew CASCADE;
-DROP TABLE Works CASCADE;
 DROP TABLE Customer CASCADE;
 DROP TABLE Captain CASCADE;
 DROP TABLE Cruise CASCADE;
@@ -13,6 +12,7 @@ DROP TABLE Waitlist CASCADE;
 DROP TABLE Confirmed CASCADE;
 DROP TABLE Reserved CASCADE;
 DROP TABLE request CASCADE;
+DROP TABLE Works Cascade;
 
 CREATE TABLE Crew (
 	crew_ID INTEGER NOT NULL,
@@ -20,13 +20,6 @@ CREATE TABLE Crew (
 	PRIMARY KEY(crew_ID)
 );
 
-CREATE TABLE Works (
-	crew_ID INTEGER NOT NULL,
-	c_num INTEGER NOT NULL, 
-	PRIMARY KEY(crew_ID, c_num),
-	FOREIGN KEY(crew_ID) REFERENCES Crew,
-	FOREIGN KEY(c_num) REFERENCES Cruise
-);
 	
 
 CREATE TABLE Customer ( 
@@ -47,7 +40,17 @@ CREATE TABLE Captain (
 	ID INTEGER NOT NULL, 
 	name CHAR(30),
 	PRIMARY KEY(ID)
-); 
+);
+
+CREATE TABLE Ship (
+        model CHAR(30),
+        shipID INTEGER NOT NULL,
+        make CHAR(20),
+        age INTEGER,
+        seats INTEGER,
+        PRIMARY KEY(shipID)
+);
+ 
 
 
 CREATE TABLE Cruise (
@@ -68,6 +71,15 @@ CREATE TABLE Cruise (
 	
 );
 
+CREATE TABLE Works (
+        crew_ID INTEGER NOT NULL,
+        c_num INTEGER NOT NULL,
+        PRIMARY KEY(crew_ID, c_num),
+        FOREIGN KEY(crew_ID) REFERENCES Crew,
+        FOREIGN KEY(c_num) REFERENCES Cruise
+);
+
+
 CREATE TABLE Schedule ( 
 	day CHAR(10),
 	depart_time CHAR(10),
@@ -77,16 +89,6 @@ CREATE TABLE Schedule (
 	FOREIGN KEY (c_num) REFERENCES Cruise
 );
 	
-
-
-CREATE TABLE Ship (
-	model CHAR(30),
-	shipID INTEGER NOT NULL,
-	make CHAR(20),
-	age INTEGER,
-	seats INTEGER,
-	PRIMARY KEY(shipID)
-);
 
 CREATE TABLE Technician (
 	techID INTEGER NOT NULL,
