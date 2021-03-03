@@ -51,7 +51,7 @@ CREATE TABLE Cruise (
 	c_num INTEGER NOT NULL,
 	cost FLOAT, 
 	num_sold INTEGER,
-s	num_stops INTEGER,
+	num_stops INTEGER,
 	actual_arrive_date CHAR(20),
 	actual_arrive_time CHAR(10),
 	actual_depart_time CHAR(10),
